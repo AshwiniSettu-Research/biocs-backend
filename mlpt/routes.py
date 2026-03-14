@@ -10,7 +10,8 @@ Endpoints:
 import logging
 import threading
 from flask import Blueprint, request, jsonify
-from .predict import MLPTPredictor
+
+# CLASS_NAMES and NUM_CLASSES are lightweight (no torch dependency)
 from .config import CLASS_NAMES, NUM_CLASSES
 
 logger = logging.getLogger(__name__)
@@ -29,6 +30,7 @@ def _get_predictor():
         with _predictor_lock:
             # Double-checked locking
             if _predictor is None:
+                from .predict import MLPTPredictor
                 _predictor = MLPTPredictor()
     return _predictor
 

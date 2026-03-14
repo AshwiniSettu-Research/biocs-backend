@@ -14,7 +14,6 @@ from flask_cors import CORS
 
 from config import get_config
 from cm_blosum_nw import CM_BLOSUM_NW, AMINO_ACIDS as CM_AMINO_ACIDS, BLOSUM62_DATA
-from mlpt.routes import mlpt_bp
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -27,6 +26,9 @@ CORS(app, resources={r"/api/*": {
     "methods": ["GET", "POST", "OPTIONS"],
     "allow_headers": ["Content-Type"],
 }})
+
+# Defer mlpt import to avoid slow torch import at startup
+from mlpt.routes import mlpt_bp  # noqa: E402
 app.register_blueprint(mlpt_bp)
 
 VALID_PROTEIN_CHARS = set("ACDEFGHIKLMNPQRSTVWY")
