@@ -73,10 +73,9 @@ def predict():
 @mlpt_bp.route("/api/mlpt/health", methods=["GET"])
 def health():
     """Health check for the MLPT service."""
-    predictor = _get_predictor()
     return jsonify({
         "status": "ok",
-        "model_loaded": predictor.loaded,
+        "model_loaded": _predictor is not None and _predictor.loaded,
         "service": "MLPT Antigenic Peptide Predictor",
     })
 
