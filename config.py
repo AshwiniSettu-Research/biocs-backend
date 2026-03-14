@@ -25,7 +25,10 @@ class DevelopmentConfig(BaseConfig):
 class ProductionConfig(BaseConfig):
     """Production configuration — debug off, restricted CORS."""
     DEBUG = False
-    CORS_ORIGINS = os.environ.get("CORS_ORIGINS", "").split(",")
+    CORS_ORIGINS = os.environ.get(
+        "CORS_ORIGINS",
+        "https://biocs-app.vercel.app"
+    ).split(",")
 
 
 class TestingConfig(BaseConfig):

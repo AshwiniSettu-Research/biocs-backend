@@ -22,7 +22,11 @@ logger = logging.getLogger(__name__)
 app = Flask(__name__)
 app_config = get_config()
 app.config.from_object(app_config)
-CORS(app, resources={r"/api/*": {"origins": app_config.CORS_ORIGINS}})
+CORS(app, resources={r"/api/*": {
+    "origins": app_config.CORS_ORIGINS,
+    "methods": ["GET", "POST", "OPTIONS"],
+    "allow_headers": ["Content-Type"],
+}})
 app.register_blueprint(mlpt_bp)
 
 VALID_PROTEIN_CHARS = set("ACDEFGHIKLMNPQRSTVWY")
